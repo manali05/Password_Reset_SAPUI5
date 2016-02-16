@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+  		<meta name=”viewport” content=”width=device-width,initial-scale=1”>
+  	
+  	<!---- Applying styles ---->
+  	
+  		<style type="text/css" id="css1">
+  				.txtbx
+  				{
+  					padding-left: 2px!important;
+  				}
+  				.ttl
+  				{
+  					font-weight: bolder!important;
+  					text-align: center!important;
+  				/*padding-left: 50px!important;*/
+  					padding-right: 500px!important;
+  					font-size:20px!important;
+  				}
+  			 
+  			 	.page
+  			 	{
+  		 			/*background-color: rgb(41,144,159)!important;*/ 
+  		 			text-align: center!important;
+  		 	  	}
+  		  		
+  		  		 .style
+  				{
+  			 
+  			 /*	font-weight: bolder;*/
+  			 	
+  				}
+  				
+  				.btnpad
+  				{
+  					padding-right: 10px!important;
+  					padding-left :10px!important;
+  					
+  				}
+  			
+  				.contentpnl
+  				{
+  					padding-right: 300px;
+  				}
+  				
+  				.rightpnl
+  				{
+  				
+  				
+  					background-color:#FFE7BA!important;
+  					border-style: solid;
+  					border-width:0.5px;
+  					border-bottom-color: white!important;
+  					border-left-color: white!important;
+  					border-right-color: white!important;
+  					border-top-color: white!important;
+  					default-span:L6 M6 S12!imporatnt;
+  				
+  				}
+  			
+  				.leftpnl
+  				{
+  				
+  					background-color:#FFE7BA!important;
+  					float: left; 
+  					border-style: solid;
+  					border-width:0.5px;
+  					border-bottom-color: white!important;
+  					border-left-color: white!important;
+  					border-right-color: white!important;
+  					border-top-color: white!important;
+  				}
+  				
+  				.pnlcntn
+  				{
+  					background-color:#FFEFD5!important;
+  				}
+  				
+  				.text1
+  				{
+  					 
+  					font-size: larger;
+  			
+  				}
+  		
+  				.text2
+  				{
+  					padding-top: 1px;
+  					font-size: larger;
+  					text-align: left;
+  				
+  				}
+  			
+  				.textcolor
+  				{
+	  				color: black!important;
+  				}
+  		
+  				.responsive
+  				{
+  					default-span:L6 M6 S12!imporatnt;
+  					text-align: left!important;
+  				}
+  			
+  				.grad1 
+  				{
+    				height: 200px;
+    				background: #067084; /* For browsers that do not support gradients */
+   					 background: -webkit-linear-gradient(#067084, #e6f3f6); /* For Safari 5.1 to 6.0 */
+   					 background: -o-linear-gradient(#067084, #e6f3f6); /* For Opera 11.1 to 12.0 */
+   					 background: -moz-linear-gradient(#067084, #e6f3f6); /* For Firefox 3.6 to 15 */
+   					 background: linear-gradient(#067084,#e6f3f6); /* Standard syntax (must be last) */
+			  	}	
+  		</style>
+  		
+		<script src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m"
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+
+		<script>
+				sap.ui.localResources("password_reset");
+				var app = new sap.m.App({initialPage:"idPassword_reset1" , id:"app"});
+				var page = sap.ui.view({id:"idPassword_reset1", viewName:"password_reset.Password_reset", type:sap.ui.core.mvc.ViewType.XML});
+				var page1=sap.ui.view({id:"generate_validate_rcode", viewName : "password_reset.Generate_Validate_R_Code" , type:sap.ui.core.mvc.ViewType.XML});
+				app.addPage(page).addPage(page1);
+				app.placeAt("content");
+				
+				//Code to make Connection to Odata Layer 
+				var oModel=new sap.ui.model.odata.ODataModel(this.getUrl("/sap/opu/odata/sap/Z_PASSWORD_RESET_DEMO_SRV_SRV/"),true);	
+
+	     		sap.ui.getCore().setModel(oModel);
+				oModel.setCountSupported(false);
+				oModel.attachRequestSent(function(){
+					//sap.ui.getCore().byId("idPage3--busyInd").setVisible(true);
+					 sap.ui.core.BusyIndicator.show(10);
+				});
+				oModel.attachRequestCompleted(function(){
+		            sap.ui.core.BusyIndicator.hide();
+				});
+
+				function getUrl(sUrl) {
+			    	if (sUrl == "")
+			    	return sUrl;
+			    	if (window.location.hostname == "localhost") {
+			    	return "proxy" + sUrl;
+			    	} else {
+			    	return sUrl;
+			    	}
+
+				} 
+			   
+		</script>
+		
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+	</body>
+</html>
